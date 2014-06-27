@@ -4,11 +4,19 @@ require 'sinatra'
 set :sessions, true
 
 get '/' do
-  erb :username
+  if session{:player_name}
+    redirect '/game'
+  else
+    redirect '/new_player'
+  end
 end
 
-post '/username' do
-  session[:user_name] = params[:user_name].capitalize
+get '/new_player' do
+  erb :new_player
+end
+
+post '/new_player' do
+  session[:player_name] = params[:player_name].capitalize
   redirect '/game'
 end
 

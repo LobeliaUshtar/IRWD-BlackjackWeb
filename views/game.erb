@@ -1,7 +1,18 @@
 <h1>Blackjack!</h1>
 
-Hi <%= session[:player_name] %>.
-<br/>
-Your cards are being drawn...
-<br/>
-Would you like to place a bet? (<%= session[:player_name] %>'s funds are $500)
+<p>Hello <%= session[:player_name] %>.</p>
+<h4>Deck is being shuffled and cards are being drawn...</h4>
+
+Dealer's Cards:
+<ul>
+  <% session[:dealer_cards].each do |card| %>
+    <li><%= card.to_s %></li>
+  <% end %>
+</ul>
+
+Player's Cards:
+<ul>
+  <% session[:player_cards].each do |card| %>
+    <li><%= card.to_s %></li>
+  <% end %>
+</ul>

@@ -11,8 +11,9 @@
       <div class="navbar-inner">
         <div class="container">
             <ul class="nav">
-              <li><h1>Blackjack!</h1></li>
-              <li><a href="/clear_session">Restart Game</a></li>
+              <li><h4>Blackjack!</h4></li>
+              <li><a href="/clear_session">Restart</a></li>
+              <li><a href="/">Refresh</a></li>
             </ul>
         </div>
       </div>
@@ -21,6 +22,9 @@
   <div class="container">
     <%if @error %>
       <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+    <%if @success %>
+      <div class="alert alert-success"><%=@success%></div>
     <% end %>
       <%= yield %>
   </div>

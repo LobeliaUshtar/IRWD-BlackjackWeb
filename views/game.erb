@@ -1,17 +1,32 @@
-<h3>Deck is being shuffled and cards are being drawn...</h3>
+<h2>Deck is being shuffled and cards are being drawn...</h2>
 
 <p>Hello <%= session[:player_name] %>.  Here are the dealt hands.</p>
 <br/>
-<h4>Dealer Gabby's Cards:</h4>
-<ul>
-  <% session[:dealer_cards].each do |card| %>
-    <li><%= card.to_s %></li>
-  <% end %>
-</ul>
 
-<h4><%= session[:player_name] %>'s Cards:</h4>
-<ul>
-  <% session[:player_cards].each do |card| %>
-    <li><%= card.to_s %></li>
+<div class='well'>
+  <h3>Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</h3>
+  <% session[:dealer_cards].each do |card| %>
+    <%= card_image(card) %>
   <% end %>
-</ul>
+</div>
+
+
+<div class='well'>
+  <h3><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total</h3>
+  <% session[:player_cards].each do |card| %>
+    <%= card_image(card) %>
+  <% end %>
+</div>
+
+<p>
+  <% if @show_hit_or_stay_buttons %>
+    What would <%= session[:player_name] %> like to do?
+    <form id='hit_form' action='/game/player/hit' method='post'>
+      <input type='submit' class='btn btn-success' value='Hit' />
+    </form>
+
+    <form id='stay_form' action='/game/player/stay' method='post'>
+      <input type='submit' class='btn btn-warning' value='Stay' />
+    </form>
+  <% end %>
+</p>

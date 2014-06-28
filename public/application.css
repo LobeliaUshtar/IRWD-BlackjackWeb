@@ -1,14 +1,32 @@
-h1 {
+h2 {
+  color:#DB7093;
+  font-family:cursive;
+}
+
+h3 {
+  color:#20B2AA;
+  font-family:cursive;
+}
+
+h4 {
   color:#4682B4;
   font-family:Impact;
   text-align:center;
 }
 
-h3, h4 {
-  color:#20B2AA;
-  font-family:cursive;
-}
-
 p {
   font-size:1.25em;
+}
+
+form#hit_form {
+  float:left;
+  margin-right:10px;
+}
+
+form#stay_form {
+  float:left;
+}
+
+img.card_image {
+  margin:0px 5px 5px 0px;
 }

@@ -1,18 +1,25 @@
 <h2>Deck is being shuffled and cards are being drawn...</h2>
 
 <p>Hello <%= session[:player_name] %>.  Here are the dealt hands.</p>
-<br/>
 
-<div class='well'>
-  <h3>Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</h3>
+<div id='#p1' class='well'>
+  <p>Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</p>
   <% session[:dealer_cards].each do |card| %>
     <%= card_image(card) %>
+  <% end %>
+  <% if @show_dealer_hit_button == true %>
+    <p>
+      <form action='/game/dealer/hit' method='post'>
+        <h5>Dealer is below 17 so must hit.</h5>
+        <input type='submit' class='btn btn-primary' value='Click to see the next dealer card &rarr;'>
+      </form>
+    </p>
   <% end %>
 </div>
 
 
-<div class='well'>
-  <h3><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total</h3>
+<div id='#p2' class='well'>
+  <p><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total</p>
   <% session[:player_cards].each do |card| %>
     <%= card_image(card) %>
   <% end %>

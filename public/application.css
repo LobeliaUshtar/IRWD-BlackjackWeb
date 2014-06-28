@@ -3,11 +3,6 @@ h2 {
   font-family:cursive;
 }
 
-h3 {
-  color:#20B2AA;
-  font-family:cursive;
-}
-
 h4 {
   color:#4682B4;
   font-family:Impact;
@@ -15,7 +10,13 @@ h4 {
 }
 
 p {
+  color:#000000;
   font-size:1.25em;
+}
+
+div p {
+  color:#20B2AA;
+  font-family:cursive;
 }
 
 form#hit_form {

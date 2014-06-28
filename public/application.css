@@ -1,9 +1,14 @@
 h1 {
-  color:blue;
+  color:#4682B4;
   font-family:Impact;
+  text-align:center;
 }
 
 h3, h4 {
-  color:green;
+  color:#20B2AA;
   font-family:cursive;
+}
+
+p {
+  font-size:1.25em;
 }

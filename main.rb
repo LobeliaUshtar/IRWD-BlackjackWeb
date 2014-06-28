@@ -33,15 +33,10 @@ get '/game' do
   session[:dealer_cards] = []
   session[:player_cards] = []
 
-  session[:dealer_cards] << session[:deck].pop
-  session[:player_cards] << session[:deck].pop
-  session[:dealer_cards] << session[:deck].pop
-  session[:player_cards] << session[:deck].pop
-
-  # 2.times do
-  #   session[:dealer_cards] << session[:deck].pop
-  #   session[:player_cards] << session[:deck].pop
-  # end
+  2.times do
+    session[:dealer_cards] << session[:deck].pop
+    session[:player_cards] << session[:deck].pop
+  end
 
   erb :game
 end

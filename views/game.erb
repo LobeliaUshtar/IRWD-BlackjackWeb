@@ -1,16 +1,15 @@
-<h1>Blackjack!</h1>
+<h3>Deck is being shuffled and cards are being drawn...</h3>
 
-<p>Hello <%= session[:player_name] %>.</p>
-<h4>Deck is being shuffled and cards are being drawn...</h4>
-
-Dealer's Cards:
+<p>Hello <%= session[:player_name] %>.  Here are the dealt hands.</p>
+<br/>
+<h4>Dealer Gabby's Cards:</h4>
 <ul>
   <% session[:dealer_cards].each do |card| %>
     <li><%= card.to_s %></li>
   <% end %>
 </ul>
 
-Player's Cards:
+<h4><%= session[:player_name] %>'s Cards:</h4>
 <ul>
   <% session[:player_cards].each do |card| %>
     <li><%= card.to_s %></li>

@@ -5,7 +5,7 @@
     <a href="/game_over" class='btn'>No</a>
   </p>
 <% else %>
-  <h2>Deck is being shuffled and cards are being drawn...</h2>
+  <h2>Deck has been shuffled...</h2>
   <p>Hello <%= session[:player_name] %>.  Here are the dealt hands.</p>
 <% end %>
 
@@ -33,7 +33,6 @@
     </p>
   <% end %>
 </div>
-
 
 <div class='well'>
   <p><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total</p>

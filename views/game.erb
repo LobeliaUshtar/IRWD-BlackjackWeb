@@ -12,9 +12,9 @@
 <div class='well'>
 
   <% if session[:turn] != session[:player_name] %>
-    <p>Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</p>
+    <p class="dealt">Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</p>
   <% else %>
-    <p>Dealer Gabby's Cards ~ ??? total</p>
+    <p class="dealt">Dealer Gabby's Cards ~ ??? total</p>
   <% end %>
   <% session[:dealer_cards].each_with_index do |card, i| %>
     <% if session[:turn] != "dealer" && i == 0 %>
@@ -35,7 +35,7 @@
 </div>
 
 <div class='well'>
-  <p><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total</p>
+  <p class="dealt"><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total</p>
   <% session[:player_cards].each do |card| %>
     <%= card_image(card) %>
   <% end %>

@@ -13,8 +13,8 @@ p {
   font-size:1.25em;
 }
 
-div p {
-  color:#20B2AA;
+.dealt {
+  color:#0000FF;
   font-family:cursive;
 }
 

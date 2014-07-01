@@ -5,6 +5,7 @@ set :sessions, true
 
 BLACKJACK_AMOUNT = 21
 DEALER_HIT_MIN = 17
+INITIAL_POT_AMOUNT = 500
 
 helpers do
   def calculate_total(cards)
@@ -48,6 +49,7 @@ helpers do
 
   def winner(msg='')
     @play_again = true
+    session[:player_pot] = session[:player_pot] + session[:player_bet]
     @success = "<strong>#{session[:player_name]} wins</strong> ... #{msg}"
     @show_hit_or_stay_buttons = false
     session[:turn] = "dealer"
@@ -55,6 +57,7 @@ helpers do
 
   def loser(msg='')
     @play_again = true
+    session[:player_pot] = session[:player_pot] - session[:player_bet]
     @error = "<strong>#{session[:player_name]} loses</strong> ... #{msg}"
     @show_hit_or_stay_buttons = false
     session[:turn] = "dealer"
@@ -86,6 +89,7 @@ get '/' do
 end
 
 get '/new_player' do
+  session[:player_pot] = INITIAL_POT_AMOUNT
   erb :new_player
 end
 
@@ -95,7 +99,25 @@ post '/new_player' do
     halt erb(:new_player)
   end
   session[:player_name] = params[:player_name].capitalize
-  redirect '/game'
+  redirect '/bet'
+end
+
+get '/bet' do
+  session[:player_bet] = nil
+  erb :bet
+end
+
+post '/bet' do
+  if params[:bet_amount].nil? || params[:bet_amount].to_i == 0
+    @error = "Must make a bet."
+    halt erb(:bet)
+  elsif params[:bet_amount].to_i > session[:player_pot]
+    @error = "Must bet equal to or below $#{session[:player_pot]}"
+    halt erb(:bet)
+  else
+    session[:player_bet] = params[:bet_amount].to_i
+    redirect '/game'
+  end
 end
 
 get '/game' do
@@ -133,15 +155,14 @@ post '/game/player/stay' do
 end
 
 get '/game/dealer' do
-  @success = "#{session[:player_name]} has chosen to stay.  Dealer Gabby's turn."
   session[:turn] = "dealer"
   @show_hit_or_stay_buttons = false
   dealer_total = calculate_total(session[:dealer_cards])
 
   if dealer_total == BLACKJACK_AMOUNT
-    winner("Dealer Gabby hit BLACKJACK!!!")
+    loser("Dealer Gabby hit BLACKJACK!!!")
   elsif dealer_total > BLACKJACK_AMOUNT
-    loser("Dealer Gabby BUSTED with a #{dealer_total}")
+    winner("Dealer Gabby BUSTED with a #{dealer_total}")
   elsif dealer_total >= DEALER_HIT_MIN
     redirect '/game/compare'
   else

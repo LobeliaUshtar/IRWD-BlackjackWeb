@@ -3,6 +3,11 @@ h2 {
   font-family:cursive;
 }
 
+h1 {
+  text-align:center;
+  padding:2em;
+}
+
 h4 {
   color:#4682B4;
   font-family:Impact;

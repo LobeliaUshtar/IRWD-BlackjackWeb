@@ -1,53 +1,62 @@
-<% if  @play_again %>
-  <p>
-    <h2>Play again?</h2>
-    <a href="/bet" class='btn btn-primary'>Yes</a>
-    <a href="/game_over" class='btn'>No</a>
-  </p>
-<% else %>
-  <h2>Deck has been shuffled...</h2>
-  <p>Hello <%= session[:player_name] %>.  Here are the dealt hands.</p>
-<% end %>
-
-<div class='well' id='dealer_area'>
-  <% if session[:turn] != session[:player_name] %>
-    <p class="dealt">Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</p>
-  <% else %>
-    <p class="dealt">Dealer Gabby's Cards ~ ??? total</p>
+<div id='game'>
+  <%if @loser %>
+    <div class="alert alert-error"><%=@loser%></div>
   <% end %>
-  <% session[:dealer_cards].each_with_index do |card, i| %>
-    <% if session[:turn] != "dealer" && i == 0 %>
-      <img src="/images/cards/cover.jpg">
+  <%if @winner || @tie %>
+    <div class="alert alert-success"><%=@winner%></div>
+  <% end %>
+
+  <% if  @play_again %>
+    <p>
+      <h2>Play again?</h2>
+      <a href="/bet" class='btn btn-primary'>Yes</a>
+      <a href="/game_over" class='btn'>No</a>
+    </p>
+  <% else %>
+    <h2>Deck has been shuffled...</h2>
+    <p>Hello <%= session[:player_name] %>.  Here are the dealt hands.</p>
+  <% end %>
+
+  <div class='well' id='dealer_cards'>
+    <% if session[:turn] != session[:player_name] %>
+      <p class="dealt">Dealer Gabby's Cards ~ <%= calculate_total(session[:dealer_cards]) %> total</p>
     <% else %>
+      <p class="dealt">Dealer Gabby's Cards ~ ??? total</p>
+    <% end %>
+    <% session[:dealer_cards].each_with_index do |card, i| %>
+      <% if session[:turn] != "dealer" && i == 0 %>
+        <img src="/images/cards/cover.jpg">
+      <% else %>
+        <%= card_image(card) %>
+      <% end %>
+    <% end %>
+
+    <% if @show_dealer_hit_button %>
+      <form id='dealer_hit' action='/game/dealer/hit' method='post'>
+        <input type='submit' class='btn btn-primary' value='Dealer is below 17 so must hit.  Click for next dealer card &rarr;'>
+      </form>
+    <% end %>
+  </div>
+
+  <div class='well' id='player_cards'>
+    <p class="dealt"><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total ... current bet $<%= session[:player_bet] %> (pot $<%= session[:player_pot] %>)</p>
+    <% session[:player_cards].each do |card| %>
       <%= card_image(card) %>
     <% end %>
-  <% end %>
+  </div>
 
-  <% if @show_dealer_hit_button == true %>
-    <form action='/game/dealer/hit' method='post'>
-      <input type='submit' class='btn btn-primary' value='Dealer is below 17 so must hit.  Click for next dealer card &rarr;'>
-    </form>
-  <% end %>
+  <p>
+    <% if @show_hit_or_stay_buttons %>
+      What would <%= session[:player_name] %> like to do?
+      <form id='hit_form' action='/game/player/hit' method='post'>
+        <input type='submit' class='btn btn-success' value='Hit' />
+      </form>
+
+      <form id='stay_form' action='/game/player/stay' method='post'>
+        <input type='submit' class='btn btn-warning' value='Stay' />
+      </form>
+    <% else %>
+      <%= session[:player_name] %> stays.
+    <% end %>
+  </p>
 </div>
-
-<div class='well' id='player_area'>
-  <p class="dealt"><%= session[:player_name] %>'s Cards ~ <%= calculate_total(session[:player_cards]) %> total ... current bet $<%= session[:player_bet] %> (pot $<%= session[:player_pot] %>)</p>
-  <% session[:player_cards].each do |card| %>
-    <%= card_image(card) %>
-  <% end %>
-</div>
-
-<p>
-  <% if @show_hit_or_stay_buttons %>
-    What would <%= session[:player_name] %> like to do?
-    <form id='hit_form' action='/game/player/hit' method='post'>
-      <input type='submit' class='btn btn-success' value='Hit' />
-    </form>
-
-    <form id='stay_form' action='/game/player/stay' method='post'>
-      <input type='submit' class='btn btn-warning' value='Stay' />
-    </form>
-  <% else %>
-    <%= session[:player_name] %> stays.
-  <% end %>
-</p>

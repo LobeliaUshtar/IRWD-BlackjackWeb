@@ -50,7 +50,7 @@ helpers do
   def winner(msg='')
     @play_again = true
     session[:player_pot] = session[:player_pot] + session[:player_bet]
-    @success = "<strong>#{session[:player_name]} wins</strong> ... #{msg}"
+    @winner = "<strong>#{session[:player_name]} wins</strong> ... #{msg}"
     @show_hit_or_stay_buttons = false
     session[:turn] = "dealer"
   end
@@ -58,14 +58,14 @@ helpers do
   def loser(msg='')
     @play_again = true
     session[:player_pot] = session[:player_pot] - session[:player_bet]
-    @error = "<strong>#{session[:player_name]} loses</strong> ... #{msg}"
+    @loser = "<strong>#{session[:player_name]} loses</strong> ... #{msg}"
     @show_hit_or_stay_buttons = false
     session[:turn] = "dealer"
   end
 
   def tie
     @play_again = true
-    @success = "<strong>It's a tie.</strong>"
+    @tie = "<strong>It's a tie.</strong>"
     @show_hit_or_stay_buttons = false
     session[:turn] = "dealer"
   end
@@ -146,7 +146,7 @@ post '/game/player/hit' do
   elsif player_total > BLACKJACK_AMOUNT
     loser("#{session[:player_name]} BUSTED with a #{player_total}.")
   end
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/player/stay' do
@@ -168,7 +168,7 @@ get '/game/dealer' do
   else
     @show_dealer_hit_button = true
   end
-    erb :game
+    erb :game, layout: false
 end
 
 post '/game/dealer/hit' do
@@ -187,7 +187,7 @@ get '/game/compare' do
   else
     tie
   end
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game_over' do
